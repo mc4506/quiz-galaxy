@@ -1,0 +1,20 @@
+{
+  "name": "quiz-galaxy",
+  "version": "1.0.0",
+  "description": "Our goal is to create a platform where kids and adolescents can create and share their knowledge with their friends and peers through interactive quizzes and trivia.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mc4506/quiz-galaxy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mc4506/quiz-galaxy/issues"
+  },
+  "homepage": "https://github.com/mc4506/quiz-galaxy#readme"
+}
