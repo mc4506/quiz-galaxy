@@ -1,5 +1,5 @@
 import React from 'react';
-import UsernameForm from './UsernameForm';
+import UsernameForm from './SignupForm';
 
 function SignupCard() {
 	return (

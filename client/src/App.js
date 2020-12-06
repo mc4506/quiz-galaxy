@@ -4,9 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
 
 // Components
-import Header from './components/Header';
-import Signup from './components/SignupCard';
-import Login from './components/LoginForm';
+import Header from './components/navbar/Header';
+import Signup from './components/signup/SignupCard';
+import Login from './components/login/LoginForm';
 
 function App() {
 	return (
