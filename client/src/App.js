@@ -6,7 +6,7 @@ import './App.scss';
 // Components
 import Header from './components/navbar/Header';
 import Signup from './components/signup/SignupCard';
-import Login from './components/login/LoginForm';
+import Login from './components/login/LoginCard';
 
 function App() {
 	return (

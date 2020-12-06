@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+const emailRegex = /^[a-zA-Z\d\-_.]+@[a-zA-Z\d]+\.[a-zA-Z\d]{2,}$/i;
+
 function SignupForm() {
 	const [password1, setPassword1] = useState('');
 	const [password2, setPassword2] = useState('');
@@ -10,7 +12,7 @@ function SignupForm() {
 	const handleNext = (event) => {
 		event.preventDefault();
 		if (password1 !== password2) return;
-		
+		if (!emailRegex.test(email)) return;
 	};
 
 	const handleShowPW = (event) => {
@@ -24,7 +26,7 @@ function SignupForm() {
 
 	return (
 		<div>
-			<div className="form-heading">Signup</div>
+			<div className="form-heading align-middle">Create Account</div>
 			<form onSubmit={handleNext}>
 				<div className="form-group">
 					<label htmlFor="username">Username</label>
@@ -45,7 +47,7 @@ function SignupForm() {
 						name="email"
 						id="email"
 						required
-						onChange={event => setEmail(event.target.value)}
+						onChange={(event) => setEmail(event.target.value)}
 					/>
 				</div>
 				<div className="form-group">
@@ -57,7 +59,7 @@ function SignupForm() {
 						id="password"
 						minlength="8"
 						required
-						onChange={event => setPassword1(event.target.value)}
+						onChange={(event) => setPassword1(event.target.value)}
 					/>
 				</div>
 				<div className="form-group">
@@ -69,7 +71,7 @@ function SignupForm() {
 						id="passwordConfirm"
 						minlength="8"
 						required
-						onChange={event => setPassword2(event.target.value)}
+						onChange={(event) => setPassword2(event.target.value)}
 					/>
 				</div>
 				<div className="form-group form-check">

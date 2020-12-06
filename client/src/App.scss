@@ -1,7 +1,6 @@
-@import './styles/config';
-@import './styles/media';
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Rubik:wght@700&display=swap');
 @import '~bootstrap/scss/bootstrap.scss';
+@import './styles/config';
 
 body {
 	background-color: $background-color;
@@ -26,19 +25,24 @@ svg {
 .card {
 	border-radius: 20px;
 	border: none;
+	box-shadow: $card-shadow;
 
 	.form-heading {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		width: 100%;
 		height: 80px;
 		background-color: $tertiary-color;
-		color: $primary-color;
+		color: $section-heading-text-color;
 		border-top-left-radius: 20px;
 		border-top-right-radius: 20px;
 		border: none;
+		font-size: 2rem;
 	}
 
 	.form-group {
-		padding: 20px 20px 0px 20px;
+		padding: 10px 10px 0px 10px;
 	}
 
 	.big-btn {
@@ -49,5 +53,8 @@ svg {
 		border-bottom-left-radius: 20px;
 		border-bottom-right-radius: 20px;
 		border: none;
+		font-size: 2rem;
 	}
 }
+
+@import './styles/media';
