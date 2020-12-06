@@ -16,5 +16,6 @@
   "bugs": {
     "url": "https://github.com/mc4506/quiz-galaxy/issues"
   },
-  "homepage": "https://github.com/mc4506/quiz-galaxy#readme"
+  "homepage": "https://github.com/mc4506/quiz-galaxy#readme",
+  "dependencies": {}
 }

@@ -1,0 +1,14 @@
+@include mediaSm {
+}
+
+@include mediaMd {
+	.card {
+		width: 480px;
+	}
+}
+
+@include mediaLg {
+}
+
+@include mediaXl {
+}
