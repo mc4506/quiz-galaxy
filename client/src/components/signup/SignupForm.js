@@ -8,11 +8,19 @@ function SignupForm() {
 
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
+	const [birthday, setBirthday] = useState('');
 
 	const handleNext = (event) => {
 		event.preventDefault();
 		if (password1 !== password2) return;
 		if (!emailRegex.test(email)) return;
+		// TODO: check if username exist in database
+
+		// hide username form, show birthday form
+		const usernameForm = document.querySelector('.usernameForm');
+		const birthdayForm = document.querySelector('.birthdayForm');
+		usernameForm.classList.add('d-none');
+		birthdayForm.classList.remove('d-none');
 	};
 
 	const handleShowPW = (event) => {
@@ -27,7 +35,7 @@ function SignupForm() {
 	return (
 		<div>
 			<div className="form-heading align-middle">Create Account</div>
-			<form onSubmit={handleNext}>
+			<form className="usernameForm" onSubmit={handleNext}>
 				<div className="form-group">
 					<label htmlFor="username">Username</label>
 					<input
@@ -85,6 +93,22 @@ function SignupForm() {
 					<label className="form-check-label" htmlFor="showPassword">
 						Show Password
 					</label>
+				</div>
+				<button type="submit" className="big-btn">
+					Next
+				</button>
+			</form>
+			<form className="birthdayForm d-none">
+				<div className="form-group">
+					<label htmlFor="username">What's your birthday?</label>
+					<input
+						type="date"
+						className="form-control form-control-lg"
+						name="birthday"
+						id="birthday"
+						required
+						onChange={(event) => setBirthday(event.target.value)}
+					/>
 				</div>
 				<button type="submit" className="big-btn">
 					Submit
