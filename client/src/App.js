@@ -7,6 +7,7 @@ import './App.scss';
 import Header from './components/navbar/Header';
 import Signup from './components/signup/SignupCard';
 import Login from './components/login/LoginCard';
+import testPage from './pages/testPage'
 import CreateQuizForm from './components/quiz-creation/CreateQuizForm';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
 				<Route exact path="/signup" component={Signup} />
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/create" component={CreateQuizForm} />
+        <Route exact path="/test" component={testPage} />
 			</Switch>
 		</Router>
 	);
