@@ -9,13 +9,13 @@ function QuestionsList() {
 	return (
 		<div className="mb-3">
 			<p>Questions</p>
-			<ul className="list-group list-group-flush">
+			<ol className="list-group list-group-flush">
 				{questions.map((question) => (
-					<li key={id++} className="list-group-item">
+					<li key={id++}>
 						{question.question}
 					</li>
 				))}
-			</ul>
+			</ol>
 		</div>
 	);
 }

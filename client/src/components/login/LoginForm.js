@@ -1,12 +1,25 @@
 import React, { useState } from 'react';
+import fire from '../../firebase';
+import { useHistory } from 'react-router-dom';
 
 function Login() {
-	const [username, setUsername] = useState('');
+	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+
+	const history = useHistory();
 
 	const handleLogin = (event) => {
 		event.preventDefault();
-		console.log({ username, password });
+		console.log({ email, password });
+		fire.auth()
+			.signInWithEmailAndPassword(email, password)
+			.then((user) => {
+				console.log(user);
+				history.push('/');
+			})
+			.catch((error) => {
+				console.error('Incorrect username or password');
+			});
 	};
 
 	return (
@@ -14,14 +27,14 @@ function Login() {
 			<div className="form-heading align-middle">Welcome</div>
 			<form onSubmit={handleLogin}>
 				<div className="form-group">
-					<label htmlFor="username">Username</label>
+					<label htmlFor="username">Email</label>
 					<input
 						type="text"
 						className="form-control form-control-lg"
-						name="username"
-						id="username"
+						name="email"
+						id="email"
 						required
-						onChange={(event) => setUsername(event.target.value)}
+						onChange={(event) => setEmail(event.target.value)}
 					/>
 				</div>
 				<div className="form-group">
@@ -31,7 +44,7 @@ function Login() {
 						className="form-control form-control-lg pw-select"
 						name="password"
 						id="password"
-						minlength="8"
+						minLength="8"
 						required
 						onChange={(event) => setPassword(event.target.value)}
 					/>

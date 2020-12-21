@@ -1,10 +1,10 @@
-$background-color: #79cdcd;
+$background-color: #001a33;
 
-$header-background-color: #f1a66a;
+$header-background-color: #ffb84d;
 
-$primary-color: #2f323d;
-$secondary-color: #e56399;
-$tertiary-color: #23cd6b;
+$primary-color: #f5d142;
+$secondary-color: #3d0099;
+$tertiary-color: #b30059;
 $project-colors: #a9ffb9, #79cdcd, #958cd9;
 
 $link-color: $primary-color;
@@ -17,7 +17,7 @@ $menu-color-dark: #ddd;
 
 $menu-color-active: #fff;
 
-$card-shadow: 0px 10px 46px -24px rgba(0, 0, 0, 0.75);
+$card-shadow: 0px 10px 46px -24px rgba(255, 255, 255, 0.75);
 
 @mixin iconClick {
 	&:active {
