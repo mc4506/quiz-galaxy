@@ -9,6 +9,7 @@ import './App.scss';
 import Header from './components/navbar/Header';
 import Signup from './components/signup/SignupCard';
 import Login from './components/login/LoginCard';
+import testPage from './pages/testPage'
 import CreateQuizForm from './components/quiz-creation/CreateQuizForm';
 
 function App() {
