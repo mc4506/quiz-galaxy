@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import fire from '../../firebase';
-import { useHistory } from 'react-router-dom';
 
 const emailRegex = /^[a-zA-Z\d\-_.]+@[a-zA-Z\d]+\.[a-zA-Z\d]{2,}$/i;
 
@@ -12,7 +11,9 @@ function SignupForm() {
 	const [email, setEmail] = useState('');
 	const [birthday, setBirthday] = useState('');
 
-	const history = useHistory();
+	const usernameForm = document.querySelector('.usernameForm');
+	const birthdayForm = document.querySelector('.birthdayForm');
+	const emailVerification = document.querySelector('.emailVerification');
 
 	const handleNext = (event) => {
 		event.preventDefault();
@@ -20,8 +21,6 @@ function SignupForm() {
 		if (!emailRegex.test(email)) return;
 
 		// hide username form, show birthday form
-		const usernameForm = document.querySelector('.usernameForm');
-		const birthdayForm = document.querySelector('.birthdayForm');
 		usernameForm.classList.add('d-none');
 		birthdayForm.classList.remove('d-none');
 	};
@@ -49,7 +48,8 @@ function SignupForm() {
 						console.log(user.displayName);
 						user.sendEmailVerification().then(() => {
 							console.log('email verification sent');
-							history.push('/');
+							birthdayForm.classList.add('d-none');
+							emailVerification.classList.remove('d-none');
 						});
 					})
 					.catch((error) => {
@@ -58,7 +58,7 @@ function SignupForm() {
 			})
 			.catch((error) => {
 				console.log(error);
-				if (error.code === '"auth/email-already-in-use"') {
+				if (error.code === 'auth/email-already-in-use') {
 					alert('email already registered');
 				}
 			});
@@ -146,6 +146,9 @@ function SignupForm() {
 					Submit
 				</button>
 			</form>
+			<p className="emailVerification d-none">
+				An verifcation email has been sent to your email address.
+			</p>
 		</div>
 	);
 }

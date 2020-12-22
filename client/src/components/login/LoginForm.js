@@ -6,6 +6,10 @@ function Login() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
+	const loginForm = document.querySelector('.loginForm');
+	const passwordResetForm = document.querySelector('.passwordResetForm');
+	const resetEmailSent = document.querySelector('.resetEmailSent');
+
 	const history = useHistory();
 
 	const handleLogin = (event) => {
@@ -22,10 +26,27 @@ function Login() {
 			});
 	};
 
+	const showPasswordResetForm = () => {
+		loginForm.classList.add('d-none');
+		passwordResetForm.classList.remove('d-none');
+	};
+
+	const handlePasswordReset = () => {
+		fire.auth()
+			.sendPasswordResetEmail(email)
+			.then(function () {
+				passwordResetForm.classList.add('d-none');
+				resetEmailSent.classList.remove('d-none');
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	};
+
 	return (
 		<div>
 			<div className="form-heading align-middle">Welcome</div>
-			<form onSubmit={handleLogin}>
+			<form className="loginForm" onSubmit={handleLogin}>
 				<div className="form-group">
 					<label htmlFor="username">Email</label>
 					<input
@@ -49,10 +70,37 @@ function Login() {
 						onChange={(event) => setPassword(event.target.value)}
 					/>
 				</div>
+				<div>
+					<button
+						className="forgotPassword"
+						onClick={showPasswordResetForm}>
+						Forgot Password
+					</button>
+				</div>
 				<button type="submit" className="big-btn">
 					Login
 				</button>
 			</form>
+			<form className="passwordResetForm d-none">
+				<div className="form-group">
+					<label htmlFor="passwordReset">Enter Email</label>
+					<input
+						type="email"
+						className="form-control form control-lg"
+						name="passwordReset"
+						placeholder={email}
+					/>
+				</div>
+				<button
+					type="button"
+					className="btn"
+					onClick={handlePasswordReset}>
+					Reset Password
+				</button>
+			</form>
+			<p className="resetEmailSent d-none">
+				An email has been sent to reset your password.
+			</p>
 		</div>
 	);
 }

@@ -2,7 +2,9 @@ import { createContext } from 'react';
 
 const LoginContext = createContext({
     isLoggedIn: false,
-    setIsLoggedIn: () => {}
+    setIsLoggedIn: () => {},
+    emailVerified: false,
+    setEmailVerified: () => {}
 });
 
 export default LoginContext;

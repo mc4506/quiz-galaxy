@@ -13,18 +13,27 @@ import CreateQuizForm from './components/quiz-creation/CreateQuizForm';
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [emailVerified, setEmailVerified] = useState(false);
 
 	fire.auth().onAuthStateChanged((user) => {
-		return user ? setIsLoggedIn(true) : setIsLoggedIn(false);
+		user ? setIsLoggedIn(true) : setIsLoggedIn(false);
+		user.emailVerified ? setEmailVerified(true) : setEmailVerified(false);
+		return;
 	});
 
 	console.log('logged in?', isLoggedIn);
 
 	return (
 		<Router>
-			<LoginContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+			<LoginContext.Provider
+				value={{
+					isLoggedIn,
+					setIsLoggedIn,
+					emailVerified,
+					setEmailVerified,
+				}}>
 				<Header />
-				{!isLoggedIn ? (
+				{!isLoggedIn || !emailVerified ? (
 					<Switch>
 						<Route exact path="/signup" component={Signup} />
 						<Route exact path="/login" component={Login} />

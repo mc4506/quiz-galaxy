@@ -3,7 +3,7 @@ import fire from '../../firebase';
 import LoginContext from '../../utils/LoginContext';
 
 function Header() {
-	const { isLoggedIn } = useContext(LoginContext);
+	const { isLoggedIn, emailVerified } = useContext(LoginContext);
 
 	const handleSignOut = () => {
 		fire.auth()
@@ -62,7 +62,7 @@ function Header() {
 							Signup
 						</a>
 					</li>
-					{isLoggedIn ? (
+					{isLoggedIn && emailVerified ? (
 						<li className="nav-item" onClick={handleSignOut}>
 							<a className="nav-link" href="/">
 								Logout
