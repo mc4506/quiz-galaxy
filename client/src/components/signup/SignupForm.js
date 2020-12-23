@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import fire from '../../firebase';
 
 const emailRegex = /^[a-zA-Z\d\-_.]+@[a-zA-Z\d]+\.[a-zA-Z\d]{2,}$/i;
 
@@ -10,15 +11,16 @@ function SignupForm() {
 	const [email, setEmail] = useState('');
 	const [birthday, setBirthday] = useState('');
 
+	const usernameForm = document.querySelector('.usernameForm');
+	const birthdayForm = document.querySelector('.birthdayForm');
+	const emailVerification = document.querySelector('.emailVerification');
+
 	const handleNext = (event) => {
 		event.preventDefault();
 		if (password1 !== password2) return;
 		if (!emailRegex.test(email)) return;
-		// TODO: check if username exist in database
 
 		// hide username form, show birthday form
-		const usernameForm = document.querySelector('.usernameForm');
-		const birthdayForm = document.querySelector('.birthdayForm');
 		usernameForm.classList.add('d-none');
 		birthdayForm.classList.remove('d-none');
 	};
@@ -30,6 +32,36 @@ function SignupForm() {
 		} else {
 			inputs.forEach((e) => (e.type = 'password'));
 		}
+	};
+
+	const handleSignUp = (event) => {
+		event.preventDefault();
+		console.log(email, password1);
+		fire.auth()
+			.createUserWithEmailAndPassword(email, password1)
+			.then(() => {
+				let user = fire.auth().currentUser;
+				user.updateProfile({
+					displayName: username,
+				})
+					.then(() => {
+						console.log(user.displayName);
+						user.sendEmailVerification().then(() => {
+							console.log('email verification sent');
+							birthdayForm.classList.add('d-none');
+							emailVerification.classList.remove('d-none');
+						});
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+			})
+			.catch((error) => {
+				console.log(error);
+				if (error.code === 'auth/email-already-in-use') {
+					alert('email already registered');
+				}
+			});
 	};
 
 	return (
@@ -65,7 +97,7 @@ function SignupForm() {
 						className="form-control form-control-lg pw-select"
 						name="password"
 						id="password"
-						minlength="8"
+						minLength="8"
 						required
 						onChange={(event) => setPassword1(event.target.value)}
 					/>
@@ -77,7 +109,7 @@ function SignupForm() {
 						className="form-control form-control-lg pw-select"
 						name="passwordConfirm"
 						id="passwordConfirm"
-						minlength="8"
+						minLength="8"
 						required
 						onChange={(event) => setPassword2(event.target.value)}
 					/>
@@ -98,7 +130,7 @@ function SignupForm() {
 					Next
 				</button>
 			</form>
-			<form className="birthdayForm d-none">
+			<form className="birthdayForm d-none" onSubmit={handleSignUp}>
 				<div className="form-group">
 					<label htmlFor="username">What's your birthday?</label>
 					<input
@@ -114,6 +146,9 @@ function SignupForm() {
 					Submit
 				</button>
 			</form>
+			<p className="emailVerification d-none">
+				An verifcation email has been sent to your email address.
+			</p>
 		</div>
 	);
 }

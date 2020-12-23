@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import fire from '../../firebase';
+import LoginContext from '../../utils/LoginContext';
 
 function Header() {
+	const { isLoggedIn, emailVerified } = useContext(LoginContext);
+
+	const handleSignOut = () => {
+		fire.auth()
+			.signOut()
+			.then(() => {
+				console.log('user signed out');
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+
 	return (
 		<header>
 			<nav className="navbar navbar-light">
-				<a className="navbar-brand mb-0" href="#home">
+				<a className="navbar-brand mb-0" href="/">
 					Quiz Site
 				</a>
 				<div className="ml-auto nav-icons-col d-block d-sm-none">
@@ -33,30 +48,39 @@ function Header() {
 				</div>
 				<ul className="nav justify-content-end d-none d-sm-flex">
 					<li className="nav-item">
-						<a className="nav-link" href="#categories">
+						<a className="nav-link" href="categories">
 							Categories
 						</a>
 					</li>
 					<li className="nav-item">
-						<a className="nav-link" href="#make">
+						<a className="nav-link" href="create">
 							Make
 						</a>
 					</li>
 					<li className="nav-item">
-						<a className="nav-link" href="#login">
-							Login
-						</a>
-					</li>
-					<li className="nav-item">
-						<a className="nav-link" href="#signup">
+						<a className="nav-link" href="signup">
 							Signup
 						</a>
 					</li>
+					{isLoggedIn && emailVerified ? (
+						<li className="nav-item" onClick={handleSignOut}>
+							<a className="nav-link" href="/">
+								Logout
+							</a>
+						</li>
+					) : (
+						<li className="nav-item">
+							<a className="nav-link" href="login">
+								Login
+							</a>
+						</li>
+					)}
 					<li className="nav-item">
 						<a className="nav-link" href="/test">
 							Run Test
 						</a>
 					</li>
+
 				</ul>
 			</nav>
 		</header>
