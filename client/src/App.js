@@ -43,9 +43,14 @@ function App() {
 							path="/create"
 							component={CreateQuizForm}
 						/>
+						<Route exact path="/test" component={testPage}/>
 					</Switch>
 				) : (
-					<h1> Hello World!</h1>
+					<Switch>
+						{/* <h1> Hello World!</h1> */}
+						<Route exact path="/test" component={testPage}/>
+					</Switch>
+					
 				)}
 			</LoginContext.Provider>
 		</Router>
