@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import fire from './firebase';
+import LoginContext from './utils/LoginContext';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
@@ -11,15 +13,41 @@ import testPage from './pages/testPage'
 import CreateQuizForm from './components/quiz-creation/CreateQuizForm';
 
 function App() {
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [emailVerified, setEmailVerified] = useState(false);
+
+	fire.auth().onAuthStateChanged((user) => {
+		user ? setIsLoggedIn(true) : setIsLoggedIn(false);
+		user.emailVerified ? setEmailVerified(true) : setEmailVerified(false);
+		return;
+	});
+
+	console.log('logged in?', isLoggedIn);
+
 	return (
 		<Router>
-			<Header />
-			<Switch>
-				<Route exact path="/signup" component={Signup} />
-				<Route exact path="/login" component={Login} />
-				<Route exact path="/create" component={CreateQuizForm} />
-        <Route exact path="/test" component={testPage} />
-			</Switch>
+			<LoginContext.Provider
+				value={{
+					isLoggedIn,
+					setIsLoggedIn,
+					emailVerified,
+					setEmailVerified,
+				}}>
+				<Header />
+				{!isLoggedIn || !emailVerified ? (
+					<Switch>
+						<Route exact path="/signup" component={Signup} />
+						<Route exact path="/login" component={Login} />
+						<Route
+							exact
+							path="/create"
+							component={CreateQuizForm}
+						/>
+					</Switch>
+				) : (
+					<h1> Hello World!</h1>
+				)}
+			</LoginContext.Provider>
 		</Router>
 	);
 }

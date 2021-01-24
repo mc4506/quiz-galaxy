@@ -38,6 +38,9 @@ function CreateQuizForm() {
 				<QuestionsList />
 				<form>
 					<MultChoiceForm />
+					<button>
+						Create Quiz
+					</button>
 				</form>
 			</div>
 		</QuizCreationContext.Provider>
