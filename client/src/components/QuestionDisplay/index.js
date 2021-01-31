@@ -1,59 +1,49 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import Switch from '../../components/Switch';
-// import FormControl from 'react-bootstrap/FormControl';
+import React, { Fragment, useEffect } from 'react';
+import { Button } from 'react-bootstrap';
+// import Switch from '../../components/Switch';
 import "./style.css";
-function QuestionDisplay(props) {
-    var answers=props.answers;
-    const [box, setBox] = useState(false);
-    
+const QuestionDisplay = props => {
+
+
     useEffect(() => {
-        randomizer();
-        
-    }, []);
-    // props.question,props.answers[], props.right[],props.user, props.type props.background props.picture
-    function randomizer() {
-
-        let testArray = [];
-        let answerCount = props.answers.length;
-        let positionN = 0;
-        for (let i = 0; i < answerCount; i++) {
-            positionN = Math.floor(Math.random() * answers.length)
-            testArray.push(answers[positionN]);
-            answers.splice(positionN, 1);
-
+        for (let i = 0; i < document.querySelectorAll(".checkOut").length; i++) {
+            document.querySelector("#answer_" + i).checked = false;
+            if (props.checkedMarks.indexOf(i) >= 0) document.querySelector("#answer_" + i).checked = true;
         }
-        console.log(box);
+
+    });
+    function checkingMulti(e) {
+        if (props.type === 1) {
+            for (let i = 0; i < props.answers.length; i++) {
+                document.querySelector("#answer_" + i).checked = false;
+
+            }
+            document.querySelector("#" + e.target.id).checked = true;
+        }
+        let choice = [];
+        for (let i = 0; i < props.answers.length; i++) {
+            if (document.querySelector("#answer_" + i).checked === true) {
+                choice.push(i);
+            }
+        }
+        props.onChange(choice);
     }
 
-
     return (
-        <Fragment>
-            <h2>{props.question}</h2>
-            <form>
+        <Fragment >
+            <form style={{ opacity: props.vis }}>
+                <h2 style={{ color: "white" }} >{props.question}</h2>
+                {props.answers.map((answerOption, j) => {
+                    return (
+                        <div>
+                            <input type="checkbox" id={"answer_" + j} className="checkOut" value={j} onChange={e => checkingMulti(e)} />
+                            <label htmlFor={"answer_" + j} style={{ color: "white", marginLeft: "5px" }}>{answerOption.text}</label><br />
+                            {(answerOption.img.length > 0) ? <img src={answerOption.img} alt={answerOption} style={{ width: '300px' }} /> : <br />}
+                        </div>
 
-               { props.answers.map((answerOption, j) => {
-                   return(
-                    <div>
-                        <input type={props.type} id={"answer_" + j} name={"answer_" + j} />
-                        <label htmlFor={"answer_" + j}>{answerOption.text}</label><br />
-                        {(answerOption.img.length>0)?<img src={answerOption.img} alt={answerOption} style={{width:'300px'}} />: <br /> }
-                    </div>
-                   )
+                    )
                 })}
-
             </form>
-
-            {/* <InputGroup>
-    <InputGroup.Prepend>
-      <InputGroup.Radio aria-label="Radio button for following text input" />
-    </InputGroup.Prepend>
-    <FormControl aria-label="Text input with radio button" />
-
-  </InputGroup> */}
-
-
-
-
         </Fragment>
     );
 }
