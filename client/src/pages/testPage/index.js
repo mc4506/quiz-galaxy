@@ -239,16 +239,9 @@ function ToRenderEverything() {
     <Fragment>
       <div className="container" style={{ maxWidth: "1440px", overflow: "hidden" }}>
         <main className="container">
-          <div className="jumbotron jumbotron-fluid bg-transparent">
-            <div className="text-white align-middle">
-
-              <h1>Hello</h1>
-              {results.length>0 && <ResultsDisplay res={results} rate={rating} time={resultTime} />}
-              {testGenerated && <Timer qNumber={testGenerated.length} hours={quizDuration[0]} minutes={quizDuration[1]} seconds={quizDuration[2]} onExit={(t) => {handleQuizEnd(t)}} onChange={(q) => {handleChangeQuestion(q)}}  />}
-            </div>
+            {results.length>0 && <ResultsDisplay res={results} rate={rating} time={resultTime} />}
+            {testGenerated && <Timer qNumber={testGenerated.length} hours={quizDuration[0]} minutes={quizDuration[1]} seconds={quizDuration[2]} onExit={(t) => {handleQuizEnd(t)}} onChange={(q) => {handleChangeQuestion(q)}}  />}
             {testGenerated && <QuestionDisplay type={testGenerated[displayQ].type} vis={visible} question={testGenerated[displayQ].question} answers={testGenerated[displayQ].answers} checkedMarks={choices[displayQ]} onChange={(ch) => { handleChoices(ch)}}  />}
-          </div>
-         
         </main>
 
       </div>

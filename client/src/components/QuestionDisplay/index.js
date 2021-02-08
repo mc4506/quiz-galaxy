@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
 // import Switch from '../../components/Switch';
 import "./style.css";
 const QuestionDisplay = props => {
@@ -30,20 +29,22 @@ const QuestionDisplay = props => {
     }
 
     return (
-        <Fragment >
-            <form style={{ opacity: props.vis }}>
-                <h2 style={{ color: "white" }} >{props.question}</h2>
+        <Fragment>
+            <div className='container' style={{ opacity: props.vis }}>
+                <h2 style={{ color: "white", width: "100%" }} >{props.question}</h2>
+
                 {props.answers.map((answerOption, j) => {
                     return (
-                        <div>
-                            <input type="checkbox" id={"answer_" + j} className="checkOut" value={j} onChange={e => checkingMulti(e)} />
-                            <label htmlFor={"answer_" + j} style={{ color: "white", marginLeft: "5px" }}>{answerOption.text}</label><br />
-                            {(answerOption.img.length > 0) ? <img src={answerOption.img} alt={answerOption} style={{ width: '300px' }} /> : <br />}
-                        </div>
-
+                        <label className="option_item">
+                            <input type="checkbox" className="checkOut" id={"answer_" + j} value={j} onChange={e => checkingMulti(e)} />
+                            <div className="option_inner" style={{ backgroundImage: `url(${answerOption.img})`, backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%' }}>
+                                <div className="tickmark"> </div>
+                                <div className="name">{answerOption.text}</div>
+                            </div>
+                        </label>
                     )
                 })}
-            </form>
+            </div>
         </Fragment>
     );
 }

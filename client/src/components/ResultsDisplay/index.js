@@ -3,9 +3,10 @@ import React, { Fragment } from 'react';
 const ResultsDisplay = props => {
 
     return (
-        <Fragment>
-            <h3>You have {props.time} left</h3>
-            <table>
+        <Fragment >
+            <div style={{display: 'flex',flexWrap: 'wrap', width: '100%', height:'100%', justifyContent: 'center', color:'white'}}>
+            <h3 style={{width:'100%', textAlign:'center'}}>You have {props.time} left</h3>
+            <table >
                 <tr>
                     <th>Question</th>
                     <th>Result</th>
@@ -21,7 +22,8 @@ const ResultsDisplay = props => {
                     )
                 })}
             </table>
-            <h3>Your rating is {props.rate}%</h3>
+            <h3 style={{width:'100%', textAlign:'center'}}>Your rating is {props.rate}%</h3>
+            </div>
         </Fragment>
     );
 }

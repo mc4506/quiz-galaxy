@@ -27,18 +27,22 @@ function Timer(props) {
             if ((secondsLeft === 0)) {
                 clearInterval(timerInterval);
                 document.querySelector(".testNav").classList.add('invisible');
-                props.onExit("00h00m00s");
+                props.onExit("00:00:00");
             }
 
         }, 1000);
 
     };
     function stringTime(h, m, s) {
-        return `${h < 10 ? '0' + h : h}hours ${m < 10 ? '0' + m : m}minutes ${s < 10 ? '0' + s : s}seconds`
+        return `${h < 10 ? '0' + h : h}:${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`
     }
     function stopTest() {
         clearInterval(timerInterval);
         document.querySelector(".testNav").classList.add('invisible');
+        let navButton=document.querySelectorAll(".testNav");
+        navButton.forEach(function(userItem) {
+        userItem.classList.add('invisible');
+                });
         props.onExit(displayTime);
     }
     function questionNumberSet(n) {
@@ -57,7 +61,11 @@ function Timer(props) {
             }
         } else {
             if (n === "0") {
-                document.querySelector(".testNav").classList.remove('invisible');
+                let navButton=document.querySelectorAll(".testNav");
+                navButton.forEach(function(userItem) {
+                 userItem.classList.remove('invisible');
+                });
+                document.querySelector("#startNav").classList.add('invisible');             
                 questionNow.value = 1;
             } else questionNow.value = n;
         }
@@ -65,29 +73,21 @@ function Timer(props) {
     }
     return (
         <Fragment>
-
-            <Button
-                variant="primary"
-                onClick={timerDraw}>Start</Button>
-            <div className="testNav invisible">
-                <h3> Time left</h3>
-                <h4>{displayTime}</h4>
-                <Button
-                    variant="primary"
-                    onClick={e => { questionNumberSet('1') }}>First</Button>
-                <Button
-                    variant="primary"
-                    onClick={e => { questionNumberSet(-1) }}>Back</Button>
-                <input type="number" id="questionPage" min="1" max={props.qNumber.toString()} onClick={e => questionNumberSet(e.target.value)}></input>
-                <Button
-                    variant="primary"
-                    onClick={e => { questionNumberSet(1) }}>Next</Button>
-                <Button
-                    variant="primary"
-                    onClick={e => { questionNumberSet(props.qNumber.toString()) }}>Last</Button>
-                <Button
-                    variant="danger"
-                    onClick={stopTest}>STOP</Button>
+            <div style={{display: 'flex',flexWrap: 'wrap', width: '100%', justifyContent: 'center'}}>
+               <Button id="startNav" style={{position:'absolute', top:'50vh', zIndex:'200', transformOrigin: 'center',margin:'10px 0 0 0'}}
+                onClick={timerDraw}>Start</Button>          
+                <Button  className="testNav invisible"
+                    onClick={e => { questionNumberSet('1') }}>&#9198;</Button>
+                <Button className="testNav invisible"
+                    onClick={e => { questionNumberSet(-1) }}>&#9194;</Button>
+                <input className="testNav invisible" type="number" id="questionPage" min="1" max={props.qNumber.toString()} onClick={e => questionNumberSet(e.target.value)}></input>
+                <Button className="testNav invisible"
+                    onClick={e => { questionNumberSet(1) }}>&#9193;</Button>
+                <Button className="testNav invisible"
+                    onClick={e => { questionNumberSet(props.qNumber.toString()) }}>&#9197;</Button>
+                <Button className="testNav invisible"
+                    onClick={stopTest}>&#128721;</Button>
+                <h4 className="testNav invisible">{displayTime}</h4>    
             </div>
         </Fragment>
     );
