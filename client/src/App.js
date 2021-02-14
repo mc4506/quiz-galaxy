@@ -9,7 +9,8 @@ import './App.scss';
 import Header from './components/navbar/Header';
 import Signup from './components/signup/SignupCard';
 import Login from './components/login/LoginCard';
-import testPage from './pages/testPage'
+import testPage from './pages/testPage';
+import makeTest from './pages/makeTest';
 import CreateQuizForm from './components/quiz-creation/CreateQuizForm';
 
 function App() {
@@ -41,13 +42,20 @@ function App() {
 						<Route
 							exact
 							path="/create"
-							component={CreateQuizForm}
+							component={makeTest}
+							// component={CreateQuizForm}
 						/>
 						<Route exact path="/test" component={testPage}/>
 					</Switch>
 				) : (
 					<Switch>
 						{/* <h1> Hello World!</h1> */}
+						<Route
+							exact
+							path="/create"
+							component={makeTest}
+							// component={CreateQuizForm}
+						/>
 						<Route exact path="/test" component={testPage}/>
 					</Switch>
 					

@@ -32,7 +32,7 @@ const LayoutSimple = props => {
             <div style={{ opacity: props.vis, width: '100%', height: '100%', display: 'flex', flexWrap: 'wrap' }}>
                 <div style={{ display: 'block', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
                     <img src={props.info.img} style={{ width: '100%' }} alt={props.info.img} />
-                    <div style={{ color: "white", width: "100%", fontSize: "5vh", textAlign: 'center' }} >{props.question}</div>
+                    <div style={{ color: "white", width: "100%", fontSize: "5em", textAlign: 'center' }} >{props.question}</div>
                 </div>
                 {/* <div className="con"> */}
                     {props.answers.map((answerOption, j) => {

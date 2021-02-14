@@ -3,7 +3,8 @@ import Timer from '../../components/timer';
 import QuestionDisplay from '../../components/QuestionDisplay';
 import ResultsDisplay from '../../components/ResultsDisplay';
 import "./style.css";
-var quizDuration=[0,10,0]
+var quizDuration=[0,10,0];
+var testBackground='/./images/background1.jpg'
 var quizMain = [
   {
     "question": ["What is first cosmic velocity?"],
@@ -264,7 +265,7 @@ function ToRenderEverything() {
         <main className="container">
             {results.length>0 && <ResultsDisplay res={results} rate={rating} time={resultTime} />}
             {testGenerated && <Timer qNumber={testGenerated.length} hours={quizDuration[0]} minutes={quizDuration[1]} seconds={quizDuration[2]} onExit={(t) => {handleQuizEnd(t)}} onChange={(q) => {handleChangeQuestion(q)}}  />}
-            {testGenerated && <QuestionDisplay info={testGenerated[displayQ].info}  vis={visible} question={testGenerated[displayQ].question} answers={testGenerated[displayQ].answers} checkedMarks={choices[displayQ]} onChange={(ch) => { handleChoices(ch)}}  />}
+            {testGenerated && <QuestionDisplay background={testBackground} info={testGenerated[displayQ].info}  vis={visible} question={testGenerated[displayQ].question} answers={testGenerated[displayQ].answers} checkedMarks={choices[displayQ]} onChange={(ch) => { handleChoices(ch)}}  />}
         </main>
 
       </div>

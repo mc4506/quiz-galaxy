@@ -11,6 +11,7 @@ function Timer(props) {
         let hours = props.hours;
         questionNumberSet('0');
         event.preventDefault();
+        if ((seconds!==0)||(minutes!==0)||(hours!==0)){
         timerInterval = setInterval(function () {
             secondsLeft--;
             if (seconds === 0) {
@@ -31,7 +32,7 @@ function Timer(props) {
             }
 
         }, 1000);
-
+    }
     };
     function stringTime(h, m, s) {
         return `${h < 10 ? '0' + h : h}:${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`
