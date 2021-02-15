@@ -3,8 +3,28 @@ import Timer from '../../components/timer';
 import QuestionDisplay from '../../components/QuestionDisplay';
 import ResultsDisplay from '../../components/ResultsDisplay';
 import "./style.css";
-var quizDuration=[1,0,0]
-var quizMain = [{
+var quizDuration=[0,10,0];
+var testBackground='/./images/background1.jpg'
+var quizMain = [
+  {
+    "question": ["What is first cosmic velocity?"],
+    "rights": [{ 'text': '7.9km/sec','img': '',  'choice': true },
+               { 'text': '4.9 miles/sec','img': '',  'choice': true },
+    ],
+    "wrongs": [{ 'text': '11.2km/sec','img': '', 'choice': false },
+               { 'text': '42km/sec','img': '', 'choice': false },
+               { 'text': '300m/sec','img': '', 'choice': false },
+               { 'text': '300,000km/sec','img': '', 'choice': false },
+               { 'text': '4km/sec','img': '', 'choice': false },
+    ],
+    "info" : {
+      "positions": 4,
+      "correct": 1,
+      "layout":"simple",
+      "img": '/./images/satellite.gif'
+    }
+  },
+  {
   "question": ["What is not a part of the Solar system?"],
   "rights": [{ 'text': 'Galaxy', 'img': '/./images/galaxy.jpg', 'choice': true },
   { 'text': 'Black Hole', 'img': '/./images/blackhole.jpg', 'choice': true }
@@ -16,8 +36,11 @@ var quizMain = [{
   { 'text': 'Ceres', 'img': '/./images/ceres.jpg', 'choice': false },
   { 'text': 'Sun', 'img': '/./images/Solar_Orbiter.gif', 'choice': false }
   ],
-  "positions": 5,
-  "correct": 1
+  "info" : {
+     "positions": 5, 
+     "correct": 1,
+     "layout":"box"
+  }
 },
 {
   "question": ["What is bigger Ganymede or Mercury?"],
@@ -25,24 +48,11 @@ var quizMain = [{
   ],
   "wrongs": [{ 'text': 'Mercury', 'img': '/./images/mercury.jpg', 'choice': false },
   ],
- 
-  "positions": 2,
-  "correct": 1
-},
-{
-  "question": ["What is first cosmic velocity?"],
-  "rights": [{ 'text': '7.9km/sec','img': '',  'choice': true },
-             { 'text': '4.9 miles/sec','img': '',  'choice': true },
-  ],
-  "wrongs": [{ 'text': '11.2km/sec','img': '', 'choice': false },
-             { 'text': '42km/sec','img': '', 'choice': false },
-             { 'text': '300m/sec','img': '', 'choice': false },
-             { 'text': '300,000km/sec','img': '', 'choice': false },
-             { 'text': '4km/sec','img': '', 'choice': false },
-  ],
- 
-  "positions": 4,
-  "correct": 1
+  "info":{
+    "positions": 2,
+    "correct": 1,
+    "layout":"box"
+  }
 },
 {
   "question": ["Choose all Solar system planets?"],
@@ -58,8 +68,11 @@ var quizMain = [{
   { 'text': 'io', 'img': '/./images/io.jpg', 'choice': false },
   { 'text': 'Black Hole', 'img': '/./images/blackhole.jpg', 'choice': false },
   { 'text': 'Sun', 'img': '/./images/Solar_Orbiter.gif', 'choice': false }],
-  "positions": 6,
-  "correct": 4
+  "info" : {
+    "positions": 6,
+    "correct": 4,
+    "layout":"box"
+  }
 },
 {
   "question": ["What is second (escape Earth orbit) cosmic velocity?"],
@@ -74,9 +87,11 @@ var quizMain = [{
              { 'text': '300,000km/sec','img': '', 'choice': false },
              { 'text': '4km/sec','img': '', 'choice': false },
   ],
- 
-  "positions": 4,
-  "correct": 1
+  "info" : {
+    "positions": 4,
+    "correct": 1,
+    "layout":"simple"
+  }
 },
 {
   "question": ["Choose planet's Moon?"],
@@ -93,8 +108,11 @@ var quizMain = [{
   { 'text': 'Neptune', 'img': '/./images/neptune.jpg', 'choice': false },
   { 'text': 'Ceres', 'img': '/./images/ceres.jpg', 'choice': false }
   ],
-  "positions": 4,
-  "correct": 1
+  "info" : {
+    "positions": 4,
+    "correct": 1,
+    "layout":"box"
+  }
 },
 {
   "question": ["Choose Mars's Moons?"],
@@ -110,8 +128,11 @@ var quizMain = [{
   { 'text': 'Neptune', 'img': '/./images/neptune.jpg', 'choice': false },
   { 'text': 'Ceres', 'img': '/./images/ceres.jpg', 'choice': false }
   ],
-  "positions": 6,
-  "correct": 2
+  "info" : {
+    "positions": 6,
+    "correct": 2,
+    "layout":"box"
+  }
 },
 {
   "question": ["Choose 4 largest Jupiter's Moons?"],
@@ -128,8 +149,11 @@ var quizMain = [{
   { 'text': 'Neptune', 'img': '/./images/neptune.jpg', 'choice': false },
   { 'text': 'Ceres', 'img': '/./images/ceres.jpg', 'choice': false }
   ],
-  "positions": 7,
-  "correct": 4
+  "info" : {
+    "positions": 7,
+    "correct": 4,
+    "layout":"box"
+  }
 },
 ]
 
@@ -216,11 +240,11 @@ function ToRenderEverything() {
 
     let answersSet = [];
     for (let i = 0; i < quizMain.length; i++) {
-      answersSet = randomChoice(quizMain[i].rights, quizMain[i].correct).concat(randomChoice(quizMain[i].wrongs, quizMain[i].positions - quizMain[i].correct));
+      answersSet = randomChoice(quizMain[i].rights, quizMain[i].info.correct).concat(randomChoice(quizMain[i].wrongs, quizMain[i].info.positions - quizMain[i].info.correct));
       answersSet = randomizer(answersSet);
 
       test.push({
-        "type": quizMain[i].correct,
+        "info": quizMain[i].info,
         "question": quizMain[i].question[0],
         "answers": answersSet,
       })
@@ -241,7 +265,7 @@ function ToRenderEverything() {
         <main className="container">
             {results.length>0 && <ResultsDisplay res={results} rate={rating} time={resultTime} />}
             {testGenerated && <Timer qNumber={testGenerated.length} hours={quizDuration[0]} minutes={quizDuration[1]} seconds={quizDuration[2]} onExit={(t) => {handleQuizEnd(t)}} onChange={(q) => {handleChangeQuestion(q)}}  />}
-            {testGenerated && <QuestionDisplay type={testGenerated[displayQ].type} vis={visible} question={testGenerated[displayQ].question} answers={testGenerated[displayQ].answers} checkedMarks={choices[displayQ]} onChange={(ch) => { handleChoices(ch)}}  />}
+            {testGenerated && <QuestionDisplay background={testBackground} info={testGenerated[displayQ].info}  vis={visible} question={testGenerated[displayQ].question} answers={testGenerated[displayQ].answers} checkedMarks={choices[displayQ]} onChange={(ch) => { handleChoices(ch)}}  />}
         </main>
 
       </div>
