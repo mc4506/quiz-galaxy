@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import Timer from '../../components/timer';
+import TestNav from '../../components/testNav';
 import QuestionDisplay from '../../components/QuestionDisplay';
 import ResultsDisplay from '../../components/ResultsDisplay';
 import "./style.css";
@@ -264,7 +264,7 @@ function ToRenderEverything() {
       <div className="container" style={{ maxWidth: "1440px", overflow: "hidden" }}>
         <main className="container">
             {results.length>0 && <ResultsDisplay res={results} rate={rating} time={resultTime} />}
-            {testGenerated && <Timer qNumber={testGenerated.length} hours={quizDuration[0]} minutes={quizDuration[1]} seconds={quizDuration[2]} onExit={(t) => {handleQuizEnd(t)}} onChange={(q) => {handleChangeQuestion(q)}}  />}
+            {testGenerated && <TestNav qNumber={testGenerated.length} hours={quizDuration[0]} minutes={quizDuration[1]} seconds={quizDuration[2]} onExit={(t) => {handleQuizEnd(t)}} onChange={(q) => {handleChangeQuestion(q)}}  />}
             {testGenerated && <QuestionDisplay background={testBackground} info={testGenerated[displayQ].info}  vis={visible} question={testGenerated[displayQ].question} answers={testGenerated[displayQ].answers} checkedMarks={choices[displayQ]} onChange={(ch) => { handleChoices(ch)}}  />}
         </main>
 

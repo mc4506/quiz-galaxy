@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import LayoutBox from './LayoutBox';
 import GetText from './GetText.js';
 import { Button } from 'react-bootstrap';
 
@@ -19,15 +18,18 @@ function GetAnswers(props) {
             localArr.splice(t.num, 1, answerRenew)
         }
         props.onChange(localArr);
-        console.log(localArr)
     }
     function handleDelete(e) {
         props.onDelete(e.target.value)
     }
+    const [answers, setAnswers] = useState([]);
+    useEffect(() => {
+        setAnswers(props.answers);
+    },[props.answers]);   
     return (
         <Fragment>
             <div style={{ width: '100%' }}>
-                {props.answers.map((answerOption, j) => {
+                {answers && answers.map((answerOption, j) => {
                     return (
                         <div style={{position:'relative', margin:'5px'}}>
                             <GetText num={j} answer={answerOption} onDelete={e => e.target.value} onNew={e => e.target.value} onChange={(t) => handleChangeText(t)} />
