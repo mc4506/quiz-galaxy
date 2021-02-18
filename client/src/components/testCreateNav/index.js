@@ -1,16 +1,11 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import "./style.css";
 function TestCreateNav(props) {
     
-    function stopTest() {
-        document.querySelector(".testNav").classList.add('invisible');
-        let navButton=document.querySelectorAll(".testNav");
-        navButton.forEach(function(userItem) {
-        userItem.classList.add('invisible');
-                });
-        props.onDel("");
-    }
+    useEffect(() => { 
+        document.getElementById('questionPage').value = 1;
+    },[]);
     function questionNumberSet(n) {
         let questionNow = document.querySelector("#questionPage");
         if (Number.isInteger(n)) {

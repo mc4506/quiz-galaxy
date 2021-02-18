@@ -94,13 +94,11 @@ function GetQuestion(props) {
                         Choose question layout
                     </label>
                     <label style={{ width: '50%', color: 'yellow' }}>
-                        {/* props.q.rights.length + props.q.wrongs.length */}
-                        <input id="positionsCount" type="number" min={0} max={100} style={{ width: '20%', marginRight: '5px', marginTop: '5px' }} onChange={e =>{setPositions(e.target.value); props.onChange({"positionsCount":e.target.value})}} />
+                        <input id="positionsCount" type="number" min={0} max={rights.length+wrongs.length} style={{ width: '20%', marginRight: '5px', marginTop: '5px' }} onChange={e =>{setPositions(e.target.value); props.onChange({"positionsCount":e.target.value})}} />
                         How many positions would be displayed?(Maximum should be less then answers options)
                     </label>
                     <label style={{ width: '50%', color: 'yellow' }}>
-                        {/*props.q.rights.length  */}
-                        <input id="correctCount" type="number" min={0} max={100} style={{ width: '20%', marginRight: '5px', marginTop: '5px' }} onChange={e =>{setCorrect(e.target.value); props.onChange({"correctCount":e.target.value})}} />
+                        <input id="correctCount" type="number" min={0} max={rights.length} style={{ width: '20%', marginRight: '5px', marginTop: '5px' }} onChange={e =>{setCorrect(e.target.value); props.onChange({"correctCount":e.target.value})}} />
                         How many correct options should be selected?(Maximum should be less then correct answers options)
                     </label>
                     <Row>
@@ -114,7 +112,7 @@ function GetQuestion(props) {
                         </Col>
                         <Button onClick={e=>showLayout(e)} >Preview</Button>
                     </Row>        
-                    {show && <QuestionDisplay style={{pointerEvents:'none'}} background={''} info={{positions: positions, correct: correct,layout: layout, img:img}}  vis={1} question={question} answers={demoArr} checkedMarks={[]} onChange={(ch) => { }}  />}
+                    {show && <QuestionDisplay style={{pointerEvents:'none'}} background={props.background} info={{positions: positions, correct: correct,layout: layout, img:img}}  vis={1} question={question} answers={demoArr} checkedMarks={[]} onChange={(ch) => { }}  />}
         </Fragment >
     )
 }
