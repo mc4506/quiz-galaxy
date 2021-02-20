@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import "./style.css";
-function Timer(props) {
+function TestNav(props) {
     var timerInterval
     const [displayTime, setDisplayTime] = useState(stringTime(props.hours, props.minutes, props.seconds));
     let secondsLeft = props.hours * 3600 + props.minutes * 60 + props.seconds;
@@ -93,4 +93,4 @@ function Timer(props) {
         </Fragment>
     );
 }
-export default Timer;
+export default TestNav;

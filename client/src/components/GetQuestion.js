@@ -1,60 +1,89 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import QuestionDisplay from './QuestionDisplay';
 import GetAnswers from './GetAnswers.js';
 import { Row, Col, Button } from 'react-bootstrap';
 var demoArr=[];
-function GetQuestion() {
-    const [correctAnswersArray, setCorrectAnswersArray] = useState([]);
-    const [wrongAnswersArray, setWrongAnswersArray] = useState([]);
-    const [question, setQuestion] = useState("");
+
+function GetQuestion(props) {
+    var questionObj={}
+    const [question, setQuestion] = useState('');
     const [positions, setPositions] = useState(0);
     const [correct, setCorrect] = useState(0);
     const [img, setImg] = useState('');
     const [layout, setLayout] = useState('');
     const [show, setShow] = useState(false);
+    const [rights, setRights] = useState([]);
+    const [wrongs, setWrongs] = useState([]);
 
     // list available layouts
     var layouts = ["simple", "box"];
-    function handleReturnData(t, corr) {
-        let localChoices = t;
-        (corr) ? setCorrectAnswersArray(localChoices) : setWrongAnswersArray(localChoices);
+    useEffect(() => {
+        document.querySelector("#question").value=props.q.question;
+        document.querySelector("#mainImg").value=props.q.info.img;
+        document.querySelector("#positionsCount").value=props.q.info.positions;
+        document.querySelector("#correctCount").value=props.q.info.correct;
+        document.querySelector("#layout1").value=props.q.info.layout;
+        setRights(props.q.rights);
+        setWrongs(props.q.wrongs);
+        setQuestion(props.q.question);
+        setPositions(props.q.info.positions);
+        setCorrect(props.q.info.correct);
+        setLayout(props.q.info.layout);
+        setImg(props.q.info.img);
+
+    },[props.q]);
+    function handleReturnData(t, corr) {    
+        if (corr){ 
+            questionObj.rights=t;
+            // setRights(localChoices);
+        } else{
+             questionObj.wrongs=t;
+            //  setWrongs(localChoices);
+        }
+        props.onChange(questionObj)
     }
     function newRecord(e, corr) {
-        (corr) ? setCorrectAnswersArray(choice => [...choice, e]) : setWrongAnswersArray(choice => [...choice, e]);
+        if (corr){
+            questionObj=props.q.rights;
+            console.log(questionObj)
+            questionObj.push({ text: '', img: '', choice: true });
+            // setRights(questionObj);
+         }else{
+            questionObj=props.q.wrongs;
+            questionObj.push({ text: '', img: '', choice: false });
+            // setWrongs(questionObj);
+         }
+        props.onChange(questionObj) 
     }
     function showLayout(e){
-        e.preventDefault();
-       let arr=correctAnswersArray.slice(0,correct);
-       demoArr=wrongAnswersArray.slice(0,positions-correct);
+       let arr=rights.slice(0,correct);
+       demoArr=wrongs.slice(0,positions-correct);
        for (let i=0; i<arr.length;i++){
            demoArr.push(arr[i]);
        }
+       console.log(demoArr);
         (show===false)? setShow(true): setShow(false)
     }
 
     function delRecord(n, corr) {
-        function notEqual(value) {
-            console.log((value.text !== del));
-            return (value.text !== del);
+        if (corr){
+            questionObj=props.q.rights;
+            questionObj.splice(n,1);
+        } else{
+            questionObj=props.q.wrongs;
+            questionObj.splice(n,1);
         }
-        let del = '';
-        (corr) ? del= correctAnswersArray[n].text : del= wrongAnswersArray[n].text;
-        // console.log(question,img,positions, layout, correct, show)
-        // console.log(del)
-        (corr)? setCorrectAnswersArray(correctAnswersArray.filter(notEqual)) : setWrongAnswersArray(wrongAnswersArray.filter(notEqual));
-        
+        props.onChange(questionObj)
     }
 
     return (
         <Fragment>
-            <div className="container" style={{ maxWidth: "1440px", overflow: "hidden" }}>
-                <main className="container">
                     <h3 className='headerStyle'>Enter your question</h3>
-                    <textarea style={{ width: '100%' }} onChange={e => setQuestion(e.target.value)} />
+                    <textarea id="question" style={{ width: '100%' }} onChange={e => { setQuestion(e.target.value); props.onChange({"question":e.target.value})}} />
                     <h4 className='headerStyle'>Add your question main picture link (if you have one)</h4>
-                    <input style={{ width: '100%' }} onChange={e => setImg(e.target.value)} />
+                    <input id="mainImg" style={{ width: '100%' }} onChange={e =>{setImg(e.target.value); props.onChange({"mainImg":e.target.value})}} />
                     <label style={{ width: '100%', color: 'yellow' }}>
-                    <select style={{ width: '40%', marginRight: '5px', marginTop: '5px' }} onChange={e => setLayout(e.target.value)} >
+                    <select id="layout1" style={{ width: '40%', marginRight: '5px', marginTop: '5px' }} onChange={e => {setLayout(e.target.value); props.onChange({"layout1":e.target.value})}} >
                         {layouts.map((option, i) => {
                             return (           
                                     <option value={option}>{option}</option>                            
@@ -62,34 +91,28 @@ function GetQuestion() {
                         }
                         )}
                         </select>
-
-
                         Choose question layout
                     </label>
                     <label style={{ width: '50%', color: 'yellow' }}>
-                        <input type="number" min={0} max={correctAnswersArray.length + wrongAnswersArray.length} style={{ width: '20%', marginRight: '5px', marginTop: '5px' }} onChange={e => setPositions(e.target.value)} />
-                        How mamy positions would be displayed?(Maximum should be less then answers options)
+                        <input id="positionsCount" type="number" min={0} max={rights.length+wrongs.length} style={{ width: '20%', marginRight: '5px', marginTop: '5px' }} onChange={e =>{setPositions(e.target.value); props.onChange({"positionsCount":e.target.value})}} />
+                        How many positions would be displayed?(Maximum should be less then answers options)
                     </label>
                     <label style={{ width: '50%', color: 'yellow' }}>
-                        <input type="number" min={0} max={correctAnswersArray.length} style={{ width: '20%', marginRight: '5px', marginTop: '5px' }} onChange={e => setCorrect(e.target.value)} />
-                        How mamy correct options should be selected?(Maximum should be less then correct answers options)
+                        <input id="correctCount" type="number" min={0} max={rights.length} style={{ width: '20%', marginRight: '5px', marginTop: '5px' }} onChange={e =>{setCorrect(e.target.value); props.onChange({"correctCount":e.target.value})}} />
+                        How many correct options should be selected?(Maximum should be less then correct answers options)
                     </label>
                     <Row>
                         <Col xs={12} md={6}>
                             <h3 className='headerStyle'>Enter text of the correct answers:</h3>
-                            {correctAnswersArray && <GetAnswers answers={correctAnswersArray} correct={true} onDelete={(n) => delRecord(n, 1)} onNew={(e) => newRecord(e, 1)} onChange={(t) => handleReturnData(t, 1)} />}
+                           {rights && <GetAnswers answers={rights} correct={true} onDelete={(n) => delRecord(n, 1)} onNew={(e) => newRecord(e, 1)} onChange={(t) => handleReturnData(t, 1)} />}
                         </Col>
                         <Col xs={12} md={6}>
                             <h3 className='headerStyle'>Enter text of the wrong answers:</h3>
-                            {wrongAnswersArray && <GetAnswers answers={wrongAnswersArray} correct={false} onDelete={(n) => delRecord(n, 0)} onNew={(e) => newRecord(e, 0)} onChange={(t) => handleReturnData(t, 0)} />}
+                            {wrongs && <GetAnswers answers={wrongs} correct={false} onDelete={(n) => delRecord(n, 0)} onNew={(e) => newRecord(e, 0)} onChange={(t) => handleReturnData(t, 0)} />}
                         </Col>
                         <Button onClick={e=>showLayout(e)} >Preview</Button>
-                    </Row>
-                    
-                    {show && <QuestionDisplay style={{pointerEvents:'none'}} background={''} info={{positions: positions, correct: correct,layout: layout}}  vis={1} question={question} answers={demoArr} checkedMarks={[]} onChange={(ch) => { }}  />}
-                </main>
-
-            </div>
+                    </Row>        
+                    {show && <QuestionDisplay style={{pointerEvents:'none'}} background={props.background} info={{positions: positions, correct: correct,layout: layout, img:img}}  vis={1} question={question} answers={demoArr} checkedMarks={[]} onChange={(ch) => { }}  />}
         </Fragment >
     )
 }

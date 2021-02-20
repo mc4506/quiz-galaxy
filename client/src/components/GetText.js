@@ -6,7 +6,6 @@ function GetText(props) {
     function changeInput(e) {
         setAnswerText(e.target.value)
         sendBack(e.target.value, imgLink);
-        console.log(answerText)
     }
     function changeImage(e) {
         setImgLink(e.target.value);
@@ -22,7 +21,6 @@ function GetText(props) {
             img: b,
             num: props.num
         };
-        console.log(choice)
         props.onChange(choice);
     }
     useEffect(() => {
@@ -33,8 +31,7 @@ function GetText(props) {
         } else {
             setCheckBox(0);
         }
-        console.log(checkBox);
-    },[]);
+    },[props.answer]);
     return (
         <Fragment>
             <div >
